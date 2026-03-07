@@ -1,0 +1,33 @@
+name: PR Review Labeler
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  update_labels:
+    runs-on: ubuntu-latest
+    steps:
+      # When PR is opened, set to "pending review".
+      - name: Initial Label
+        if: github.event.action == 'opened'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: 'pending review'
+
+      # If reviewer asks for changes, swap to "needs revision".
+      - name: Needs Revision
+        if: github.event.review.state == 'changes_requested'
+        uses: actions-ecosystem/action-change-labels@v1
+        with:
+          remove: 'pending review'
+          add: 'needs revision'
+
+      # If reviewer approves, swap to "accepted"
+      - name: Accepted
+        if: github.event.review.state == 'approved'
+        uses: actions-ecosystem/action-change-labels@v1
+        with:
+          remove: 'pending review'
+          add: 'accepted'
