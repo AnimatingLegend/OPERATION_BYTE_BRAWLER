@@ -5,4 +5,4 @@ You play as a under-paid intern inside a corrupted computer system. The world is
 ## Building / Compiling
 To learn how to install the proper packages and build the game yourself, read the **[Compiling Guide](./docs/COMPILING.md)**.
 ## Contributing
-Read our **[Contributing Guide]()** if you want to expand on [GAME]'s developement!
+Read our **[Contributing Guide](./docs/CONTRIBUTING.md)** if you want to expand on [GAME]'s developement!
