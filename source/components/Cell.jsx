@@ -24,7 +24,7 @@ const Cell = ({ type }) => {
      const getIcon = () => {
           /**
            * @todo - Add icons for each entity type
-           * @author @F4LDR
+           * @author @F4LDR & @ChowChu
            */
           switch (type) {
                case ENTITY_TYPES.PLAYER: return '';
