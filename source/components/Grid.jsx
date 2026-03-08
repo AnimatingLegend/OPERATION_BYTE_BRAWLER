@@ -8,7 +8,7 @@ const Grid = ({ playerPos, keys }) => {
 
      /**
       * Grid component that renders the games map based on the player's position.
-      * @type {Object} props - The properties passed to the Grid component.
+      * @type {Object} - The properties passed to the Grid component.
       * @property {Object} playerPos - The current position of the player on the grid.
       * @property {Array} keys - The list of keys currently on the grid.
       */
@@ -16,6 +16,10 @@ const Grid = ({ playerPos, keys }) => {
           for (let x = 0; x < GRID_SIZE; x++) {
                let type = ENTITY_TYPES.EMPTY;
 
+               /**
+                * If the current cell matches the player, the key, or the boss's position, set the cell type.
+                * Otherwise, it remains an empty cell. (a wall).
+                */
                if (x === playerPos.x && y === playerPos.y) type = ENTITY_TYPES.PLAYER;
                else if (x === SECTOR_ONE.boss.x && y === SECTOR_ONE.boss.y) type = ENTITY_TYPES.BOSS;
                else if (keys.some(key => key.x === x && key.y === y)) type = ENTITY_TYPES.KEY;
@@ -27,7 +31,7 @@ const Grid = ({ playerPos, keys }) => {
 
      /**
       * Render the grid with the generated cells.
-      * @returns {JSX.Element} The rendered grid component.
+      * @returns {JSX.Element}
       */
      return (
           <div style={{
