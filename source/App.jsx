@@ -11,7 +11,6 @@ import HUD from './components/HUD';
 * ASSIGNMENTS
 * -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 * Health - @F4LDR
-* ~~Logging, DataKeys Boss Encounter - @AnimatingLegend~~
 * Player Controls - @Noah-Ram52
 */
 
@@ -86,7 +85,7 @@ export default function App() {
                <div style={{ textAlign: 'center' }}>
                     <Grid playerPos={position} keys={keys} />
                     <div style={{ marginTop: '20px' }}>
-                         {/** ~~ PLAYER CONTROLS GO HERE ~~ **/}
+                         {/** ~~ PLAYER CONTROLS GO HERE @Noah-Ram52 ~~ **/}
                     </div>
                </div>
                {isBattle && (
