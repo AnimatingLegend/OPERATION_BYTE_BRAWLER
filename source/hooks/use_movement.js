@@ -30,11 +30,8 @@ export const useMovement = (initalPosition, onKeyCollect, onBossEncounter, isAct
                const newY = Math.max(0, Math.min(GRID_SIZE - 1, prev.y + directY));
 
                /**
-                * @todo - Add player collision with walls, keys, and boss.
-                * =-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-
-                * Assignments
-                * =-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-
-                * @author @Noah-Ram52
+                * @todo - Add player collision with walls || @AnimatingLegend
+                * @todo - Add key collection and boss encounter detection || @Noah-Ram52
                 */
 
                return { x: newX, y: newY };
@@ -42,7 +39,7 @@ export const useMovement = (initalPosition, onKeyCollect, onBossEncounter, isAct
      };
 
      /**
-      * Contorl handler for the player's movement.
+      * Control handler for the player's movement.
       * @returns {void}
       */
      useEffect(() => {
