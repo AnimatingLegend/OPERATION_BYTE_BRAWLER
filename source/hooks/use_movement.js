@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GRID_SIZE } from "../data/constants";
 import { SECTOR_ONE } from "../data/levels";
 
@@ -7,30 +7,60 @@ import { SECTOR_ONE } from "../data/levels";
  * @param {*} initalPosition 
  * @param {*} onKeyCollect 
  * @param {*} onBossEncounter 
+ * @param {*} isActive
  */
-export const useMovement = (initalPosition, onKeyCollect, onBossEncounter) => {
+export const useMovement = (initalPosition, onKeyCollect, onBossEncounter, isActive) => {
      const [position, setPosition] = useState(initalPosition);
 
      /**
-      * Sets the player's position.
+      * Handles the event when the player moves.
       * @param {*} directX 
       * @param {*} directY 
       */
      const move = (directX, directY) => {
-          const newX = Math.max(0, Math.min(GRID_SIZE - 1, position.x + directX));
-          const newY = Math.max(0, Math.min(GRID_SIZE - 1, position.y + directY));
+          // Freeze movement during battle / menus
+          if (!isActive) return;
 
           /**
-           * TODO, Add the following:
-           * @todo - Player collision with walls
-           * @todo - Boss Encounter
-           * @todo - Key Collection
-           *
-           * @author @Noah-Ram52
+           * Update the players postion
+           * @type {{x: number, y: number}}
            */
+          setPosition(prev => {
+               const newX = Math.max(0, Math.min(GRID_SIZE - 1, prev.x + directX));
+               const newY = Math.max(0, Math.min(GRID_SIZE - 1, prev.y + directY));
 
-          setPosition({ x: newX, y: newY });
+               /**
+                * @todo - Add player collision with walls, keys, and boss.
+                * =-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-
+                * Assignments
+                * =-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-
+                * @author @Noah-Ram52
+                */
+
+               return { x: newX, y: newY };
+          });
      };
 
-     return { position, move };
+     /**
+      * Contorl handler for the player's movement.
+      * @returns {void}
+      */
+     useEffect(() => {
+          // @todo: rework this ENTIRE system
+          // @author: @AnimatingLegend
+          const controls = (key_event) => {
+               switch (key_event.key.toLowerCase()) {
+                    case 'w': move(0, -1); break;
+                    case 'a': move(-1, 0); break;
+                    case 's': move(0, 1); break;
+                    case 'd': move(1, 0); break;
+                    default: break;
+               }
+          };
+
+          window.addEventListener('keydown', controls);
+          return () => window.removeEventListener('keydown', controls);
+     }, [isActive, position]);
+
+     return { position };
 };
