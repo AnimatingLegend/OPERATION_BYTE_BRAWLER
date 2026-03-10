@@ -29,10 +29,19 @@ export const useMovement = (initalPosition, onKeyCollect, onBossEncounter, isAct
                const newX = Math.max(0, Math.min(GRID_SIZE - 1, prev.x + directX));
                const newY = Math.max(0, Math.min(GRID_SIZE - 1, prev.y + directY));
 
+               
+
                /**
                 * @todo - Add player collision with walls || @AnimatingLegend
                 * @todo - Add key collection and boss encounter detection || @Noah-Ram52
                 */
+               
+
+               // Movement encounter boss detection - Noah-Ram52
+               if (newX, newY) {
+                    SECTOR_ONE.boss.x === newX && SECTOR_ONE.boss.y === newY && onBossEncounter();
+               }
+
 
                return { x: newX, y: newY };
           });
