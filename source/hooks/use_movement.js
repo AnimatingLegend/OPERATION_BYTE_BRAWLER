@@ -37,9 +37,11 @@ export const useMovement = (initalPosition, onKeyCollect, onBossEncounter, isAct
                 */
                
 
-               // Movement encounter boss detection - Noah-Ram52
-               if (newX, newY) {
-                    SECTOR_ONE.boss.x === newX && SECTOR_ONE.boss.y === newY && onBossEncounter();
+               // Movement encounter boss detection  
+               if (newX, newY) {              
+                    SECTOR_ONE.keys.x === newX && SECTOR_ONE.keys.y === newY && onKeyCollect(newX, newY);  
+                    SECTOR_ONE.boss.x === newX && SECTOR_ONE.boss.y === newY && onBossEncounter();  
+                             
                }
 
 
