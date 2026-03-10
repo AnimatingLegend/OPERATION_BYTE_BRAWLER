@@ -29,21 +29,17 @@ export const useMovement = (initalPosition, onKeyCollect, onBossEncounter, isAct
                const newX = Math.max(0, Math.min(GRID_SIZE - 1, prev.x + directX));
                const newY = Math.max(0, Math.min(GRID_SIZE - 1, prev.y + directY));
 
-               
+               // Check for collision and detections.
+               if (newX, newY) {
+                    // Wall Collision
+                    SECTOR_ONE.walls.x === newX && SECTOR_ONE.walls.y === newY && console.log('you hit a wall');
 
-               /**
-                * @todo - Add player collision with walls || @AnimatingLegend
-                * @todo - Add key collection and boss encounter detection || @Noah-Ram52
-                */
-               
+                    // Key Collection
+                    SECTOR_ONE.keys.x === newX && SECTOR_ONE.keys.y === newY && onKeyCollect(newX, newY);
 
-               // Movement encounter boss detection  
-               if (newX, newY) {              
-                    SECTOR_ONE.keys.x === newX && SECTOR_ONE.keys.y === newY && onKeyCollect(newX, newY);  
-                    SECTOR_ONE.boss.x === newX && SECTOR_ONE.boss.y === newY && onBossEncounter();  
-                             
+                    // Boss Encounter
+                    SECTOR_ONE.boss.x === newX && SECTOR_ONE.boss.y === newY && onBossEncounter();
                }
-
 
                return { x: newX, y: newY };
           });
