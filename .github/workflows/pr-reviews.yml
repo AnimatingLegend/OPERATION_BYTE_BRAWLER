@@ -1,10 +1,3 @@
-name: PR Review Labeler
-on:
-  pull_request:
-    types: [opened, ready_for_review]
-  pull_request_review:
-    types: [submitted]
-
 jobs:
   update_labels:
     runs-on: ubuntu-latest
@@ -17,17 +10,27 @@ jobs:
           labels: 'pending review'
 
       # If reviewer asks for changes, swap to "needs revision".
-      - name: Needs Revision
+      - name: Remove Pending Review (Needs Revision)
         if: github.event.review.state == 'changes_requested'
-        uses: actions-ecosystem/action-change-labels@v1
+        uses: actions-ecosystem/action-remove-labels@v1
         with:
-          remove: 'pending review'
-          add: 'needs revision'
+          labels: 'pending review'
+  
+      - name: Add Needs Revision Label
+        if: github.event.review.state == 'changes_requested'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: 'needs revision'
 
       # If reviewer approves, swap to "accepted"
-      - name: Accepted
+      - name: Remove Pending Review (Accepted)
         if: github.event.review.state == 'approved'
-        uses: actions-ecosystem/action-change-labels@v1
+        uses: actions-ecosystem/action-remove-labels@v1
         with:
-          remove: 'pending review'
-          add: 'accepted'
+          labels: 'pending review'
+  
+      - name: Add Accepted Label
+        if: github.event.review.state == 'approved'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: 'accepted'
