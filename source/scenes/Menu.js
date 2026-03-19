@@ -1,5 +1,5 @@
-import { AudioManager } from "../preloads/AudioLoader";
-import { AssetLoader } from "../preloads/AssetLoader";
+import { AudioManager } from "../utils/AudioLoader";
+import { AssetLoader } from "../utils/AssetLoader";
 
 const ITEMS = ['Start Game', 'Donate', 'Credits'];
 

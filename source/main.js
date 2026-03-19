@@ -1,5 +1,5 @@
-import { AssetLoader } from "./preloads/AssetLoader";
-import { AudioManager } from "./preloads/AudioManager";
+import { AssetLoader } from "./utils/AssetLoader";
+import { AudioManager } from "./utils/AudioManager";
 import { Game } from "./Game";
 import { MenuScene } from "./scenes/Menu";
 import config from "./config";
