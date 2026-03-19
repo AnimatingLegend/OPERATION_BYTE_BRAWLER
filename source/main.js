@@ -1,10 +1,10 @@
 import { AssetLoader } from "./utils/AssetLoader";
 import { AudioManager } from "./utils/AudioManager";
-import { Game } from "./Game";
+import { Game } from "core/Game";
 import { MenuScene } from "./scenes/Menu";
 import config from "./config";
 
-const canvas = document.getElementById('canvas');
+const canvas = document.getElementById('game');
 const wrapper = document.getElementById('game-wrapper');
 const context = canvas.getContext('2d');
 
