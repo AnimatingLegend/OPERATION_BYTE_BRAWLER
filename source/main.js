@@ -1,6 +1,6 @@
 import { AssetLoader } from "./utils/AssetLoader";
 import { AudioManager } from "./utils/AudioManager";
-import { Game } from "core/Game";
+import { Game } from "./core/Game";
 import { MenuScene } from "./scenes/Menu";
 import config from "./config";
 
