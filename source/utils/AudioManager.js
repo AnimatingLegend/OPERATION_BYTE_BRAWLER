@@ -7,7 +7,7 @@ let musicGain;
 let sfxGain;
 
 /* -----------------------------------------------*
-*                AudioLoader.js                   |
+*                AudioManager.js                  |
 *------------------------------------------------*/
 export const AudioManager = {
 

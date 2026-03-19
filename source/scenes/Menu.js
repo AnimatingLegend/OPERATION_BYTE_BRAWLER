@@ -1,4 +1,4 @@
-import { AudioManager } from "../utils/AudioLoader";
+import { AudioManager } from "../utils/AudioManager";
 import { AssetLoader } from "../utils/AssetLoader";
 
 const ITEMS = ['Start Game', 'Donate', 'Credits'];
