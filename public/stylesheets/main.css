@@ -1,0 +1,39 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #0a0a0f;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#game-wrapper {
+  position: relative;
+  /* Outer glow to make the canvas feel like a CRT screen */
+  box-shadow:
+    0 0 0 2px #1a1a2e,
+    0 0 0 4px #16213e,
+    0 0 40px rgba(80, 40, 180, 0.4);
+}
+
+#game-canvas {
+  display: block;
+
+  /* Pixel art: disable anti-aliasing so sprites stay crisp */
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+
+  /* Canvas size is set by JS — CSS scales it visually */
+  width: 100%;
+  height: 100%;
+}
