@@ -1,10 +1,23 @@
-const context = new (window.AudioContext || window.webkitAudioContext)();
+/**
+ * @description A list of loaded audio buffers by key.
+ * @property {Object} bufferCache[key]
+ */
 const bufferCache = {};
+
+/**
+ * @description A list of currently playing loops.
+ * @property {Object} loops[key]
+ */
 const loops = {};
 
-let masterGain;
-let musicGain;
-let sfxGain;
+/**
+ * @description Audio context and gain nodes.
+ * @property {AudioContext} context
+ * @property {GainNode} masterGain
+ * @property {GainNode} musicGain
+ * @property {GainNode} sfxGain
+ */
+let context, masterGain, musicGain, sfxGain = null;
 
 /* -----------------------------------------------*
 *                AudioManager.js                  |
@@ -14,8 +27,10 @@ export const AudioManager = {
      /**
       * Initialize the audio system.
       */
-     async create() {
-          // Master volume chain: `masterGain` -> music/sfx splits -> destination.
+     create() {
+          if (context) return; // If the audio context is already initialized, dont create it again.
+
+          context = new (window.AudioContext || window.webkitAudioContext)();
           masterGain = context.createGain();
           musicGain = context.createGain();
           sfxGain = context.createGain();
@@ -35,16 +50,29 @@ export const AudioManager = {
       * @param {*} source 
       */
      async load(key, source) {
-          const response = await fetch(source);
-          const arrayBuffer = await response.arrayBuffer();
-          bufferCache[key] = await context.decodeAudioData(arrayBuffer);
+          if (!source) return;
+
+          // Load the sound if it hasn't been loaded yet.
+          try {
+               const response = await fetch(source);
+               if (!response.ok) throw new Error(`HTTP ${response.status} - ${source}`);
+
+               const arrayBuffer = await response.arrayBuffer();
+               bufferCache[key] = await context.decodeAudioData(arrayBuffer);
+          } catch (error) {
+               console.warn(`[WARNING | AUDIO MANAGER] Could not load '${key}' from '${source}'.`, error);
+          }
      },
 
      /**
-      * Load multiple sounds at once.
+      * Load multiple sounds at once from a `{ key: path }` manifest.
       * @param {*} manifest 
       */
-     async loadAll(manifest) { await Promise.all(Object.entries(manifest).map(([key, source]) => this.load(key, source))); },
+     async loadAll(manifest) {
+          const entries = Object.entries(manifest);
+          if (entries.length === 0) return;
+          await Promise.all(Object.entries(manifest).map(([key, source]) => this.load(key, source)));
+     },
 
      /**
       * Play a one-shot sound effect.
@@ -54,7 +82,7 @@ export const AudioManager = {
       */
      play(key, volume = 1.0) {
           // if a sound hasn't been loaded yet, do do anything.
-          if (!bufferCache[key]) return;
+          if (!context || !bufferCache[key]) return;
 
           // Create a fresh source node every time to prevent memory leaks.
           const source = context.createBufferSource();
@@ -67,17 +95,19 @@ export const AudioManager = {
           gainNode.connect(sfxGain);
           source.start();
 
-          // UPDATE: source auto-disconnects when done, so no `return source;` is needed!
+          // UPDATE: source auto-disconnects when done, so no `return source; ` is needed!
+          // BUT im keep it here just incase...
           // return source;
      },
 
      /**
-      * Play a lopping track (background music).
+      * Play a lopping track (i.e. background music).
       * @param {*} key 
       * @param {*} volume 
       */
      playLoop(key, volume = 1.0) {
           // stop any existing loops if its already playing.
+          if (!context || !bufferCache[key]) return;
           this.stopLoop(key);
 
           const source = context.createBufferSource();
@@ -91,18 +121,17 @@ export const AudioManager = {
           gainNode.connect(musicGain);
           source.start();
 
-          loops[key] = source;
+          loops[key] = { source, gainNode };
      },
 
      /**
-      * Stop a loop from playing.
+      * Stop a looping track.
       * @param {*} key 
       */
      stopLoop(key) {
-          if (loops[key]) {
-               loops[key].stop();
-               delete loops[key];
-          }
+          if (!loops[key]) return;
+          try { loops[key].source.stop(); } catch (_) { /** Do nothing. */ }
+          delete loops[key];
      },
 
      /**
@@ -112,7 +141,7 @@ export const AudioManager = {
       * @returns 
       */
      fadeOut(key, duration = 1.0) {
-          if (!loops[key]) return;
+          if (!context || !loops[key]) return;
 
           const { gainNode } = loops[key];
           gainNode.gain.setValueAtTime(0, context.currentTime);
@@ -131,5 +160,5 @@ export const AudioManager = {
      /**
       * Must be called after a user gesture (mouse click, keyboard press, etc.).
       */
-     resume() { if (context.state === 'suspended') context.resume(); }
+     resume() { if (context && context.state === 'suspended') context.resume(); }
 };
