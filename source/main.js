@@ -45,6 +45,8 @@ async function create() {
      const game = new Game(canvas, context, config);
      game.switchScene(new MenuScene(game));
      game.start();
+
+     console.log(`[INFO] Initialized game in ${performance.now() - game.lastTime}ms.`);
 }
 
 create().catch(console.error);
