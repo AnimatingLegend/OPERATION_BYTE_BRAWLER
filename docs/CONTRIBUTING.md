@@ -33,6 +33,31 @@ chore(npm): update vite to 8.0.0
 fix: fixed crash when entering settings
 ```
 
+**PLACEHOLDERS**
+```txt
+feat:
+fix:
+docs:
+style:
+refactor:
+performance:
+test:
+chore:
+
+|=-=-=-=-=-=-=-=-=-=--=|
+|=-=-= PARAMETERS =-=-=|
+|=-=-=-=-=-=-=-=-=-=--=|
+
+feat():
+fix():
+docs():
+style():
+refactor():
+performance():
+test():
+chore():
+```
+
 **HERE IS WHAT NOT TO DO:**
 ```txt
 update
