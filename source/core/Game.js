@@ -34,7 +34,7 @@ export class Game {
           if (this.running) return;
 
           this.running = true;
-          this.lastTime = Performance.now();
+          this.lastTime = performance.now();
           this.rafId = requestAnimationFrame(this.loop.bind(this));
      }
 
@@ -68,7 +68,7 @@ export class Game {
                this.currentScene.render();
           }
 
-          this.input.flush(); // Flush **after** rednering to prevent input lag.
+          this.input.flush(); // Flush **after** rendering to prevent input lag.
           this.rafId = requestAnimationFrame(this.loop.bind(this));
      }
 };
