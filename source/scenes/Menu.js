@@ -65,7 +65,7 @@ export class MenuScene {
           context.fillStyle = '#ffffff';
           context.font = '500 48px monospace';
           context.textAlign = 'center';
-          context.fillText('OPERATION: BYTE_BRAWLERS', WIDTH / 2, 140);
+          context.fillText('OPERATION: BYTE_BRAWLER', WIDTH / 2, 140);
 
           ITEMS.forEach((item, index) => {
                const yAxis = 250 + index * 50;
@@ -74,7 +74,16 @@ export class MenuScene {
                if (isSelected) {
                     context.fillStyle = 'rgba(255, 255, 255, 0.5)';
                     context.beginPath();
-                    context.roundRect(WIDTH / 2 - 200, yAxis - 22, 240, 38, 8);
+                    context.roundRect(WIDTH / 2 - 200, yAxis - 25, 400, 40, 10);
+                    context.fill();
+               }
+               else {
+                    // FIXME:
+                    // I'm intentionally making the items selection background-color the same as if you're not selecting it.
+                    // I'm not sure HOW to fix this, but I'll eventually come back to it. it looks nice anyways lol
+                    context.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                    context.beginPath();
+                    context.roundRect(WIDTH / 2 - 200, yAxis - 25, 400, 40, 10);
                     context.fill();
                }
 
