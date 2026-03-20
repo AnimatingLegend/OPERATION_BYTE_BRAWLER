@@ -47,7 +47,7 @@ export class MenuScene {
                     if (ITEMS[this.selected] === 'Donate') window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
                     break;
                case 2:
-                    this.game.switchScene(new CreditsScene(this.game, { returnTo: 'menu' }));
+                    this.game.switchScene(new CreditsScene(this.game, { returnScene: MenuScene }));
                     break;
           }
      }
@@ -59,6 +59,7 @@ export class MenuScene {
           const { context } = this;
           const { WIDTH, HEIGHT } = this.game.config;
 
+          context.clearRect(0, 0, WIDTH, HEIGHT);
           context.save();
           context.globalAlpha = this.alpha;
 
