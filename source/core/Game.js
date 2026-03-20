@@ -29,7 +29,10 @@ export class Game {
 
           // Log scene changes.
           console.log(`[INFO] Switching to ${newScene.constructor.name}.`);
-          console.log(`[WARNING] Does ${this.currentScene?.constructor.name} have a render or update ${typeof newScene?.render}?`);
+
+          // Warn if the scene doesn't have a render or update method.
+          if (!this.currentScene.render || !this.currentScene.update)
+               console.log(`[WARNING] Does ${this.currentScene?.constructor.name} have a render or update ${typeof newScene?.render}?`);
      }
 
      /**
