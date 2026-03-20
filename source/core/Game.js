@@ -1,4 +1,5 @@
 import { InputHandler } from "./InputHandler";
+import { MenuScene } from "../scenes/Menu";
 
 export class Game {
      constructor(canvas, context, config) {
@@ -25,6 +26,10 @@ export class Game {
           if (this.currentScene?.onExit) this.currentScene.onExit();
           this.currentScene = newScene;
           if (this.currentScene?.onEnter) this.currentScene.onEnter();
+
+          // Log scene changes.
+          console.log(`[INFO] Switching to ${newScene.constructor.name}.`);
+          console.log(`[WARNING] Does ${this.currentScene?.constructor.name} have a render or update ${typeof newScene?.render}?`);
      }
 
      /**
