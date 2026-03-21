@@ -1,5 +1,5 @@
 export class Entity {
-     conststructor(x, y, width, height) {
+     constructor(x, y, width, height) {
           this.x = x; this.y = y;
           this.width = width; this.height = height;
           this.velocityX = 0; this.velocityY = 0;
@@ -14,6 +14,6 @@ export class Entity {
      /**
       * Every entity must implement `update()` or `render()`
       */
-     update() { throw new Error(`${this.conststructor.name} must implement update()`); }
-     render() { throw new Error(`${this.conststructor.name} must implement render()`); }
+     update() { throw new Error(`${this.constructor.name} must implement update()`); }
+     render() { throw new Error(`${this.constructor.name} must implement render()`); }
 }
